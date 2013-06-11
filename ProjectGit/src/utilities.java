@@ -10,44 +10,57 @@ import org.monte.media.Format;
 import org.monte.media.FormatKeys.MediaType;
 import org.monte.media.math.Rational;
 import org.monte.screenrecorder.ScreenRecorder;
-
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 
 public class utilities {
 	static String AUTOMATION_PATH = "C:\\results\\";
-	
-	public static ScreenRecorder getScreenRecorder() throws Exception{
+
+	public static ScreenRecorder getScreenRecorder() throws Exception {
 
 		GraphicsConfiguration gc = GraphicsEnvironment
-              .getLocalGraphicsEnvironment()
-              .getDefaultScreenDevice()
-              .getDefaultConfiguration();
+				.getLocalGraphicsEnvironment().getDefaultScreenDevice()
+				.getDefaultConfiguration();
 
-		ScreenRecorder  screenRecorder = new ScreenRecorder(gc,
-              new Format(MediaTypeKey, MediaType.FILE, MimeTypeKey, MIME_AVI),
-              new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE,
-                   CompressorNameKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE,
-                   DepthKey, 24, FrameRateKey, Rational.valueOf(15),
-                   QualityKey, 1.0f,
-                   KeyFrameIntervalKey, 15 * 60),
-              new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, "black",
-                   FrameRateKey, Rational.valueOf(30)),
-              null);
+		ScreenRecorder screenRecorder = new ScreenRecorder(gc, new Format(
+				MediaTypeKey, MediaType.FILE, MimeTypeKey, MIME_AVI),
+				new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey,
+						ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE,
+						CompressorNameKey,
+						ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE, DepthKey, 24,
+						FrameRateKey, Rational.valueOf(15), QualityKey, 1.0f,
+						KeyFrameIntervalKey, 15 * 60), new Format(MediaTypeKey,
+						MediaType.VIDEO, EncodingKey, "black", FrameRateKey,
+						Rational.valueOf(30)), null);
 
 		return screenRecorder;
 	}
-	
-	public static void moveFile(String newName, List<File> createdMovieFiles){
+
+	public static void moveFile(String newName, List<File> createdMovieFiles) {
 		int part = 0;
-		for(File file : createdMovieFiles){
+		for (File file : createdMovieFiles) {
 			file.renameTo(new File(AUTOMATION_PATH + newName + part + ".avi"));
-			part ++;
+			part++;
 		}
 	}
 
 	public static void removeFiles(List<File> createdMovieFiles) {
-		for(File file : createdMovieFiles){
+		for (File file : createdMovieFiles) {
 			file.delete();
 		}
+	}
+
+	public static void showErrors(WebDriver driver, String msg) {
+		String myscript = "div = document.createElement(\"div\"); " 
+				+ " div.style.position = \"relative\"; "
+				+ " div.style.zindex = \"9999\"; "
+				+ " div.style.color = \"blue\"; "
+				+ " div.style.fontSize = \"34px\"; "
+				+ " div.style.backgroundcolor = \"white\"; "
+				+ " div.innerHTML = \"" + msg
+				+ "\"; 		document.body.insertBefore(div, document.body.firstChild);";
+		((JavascriptExecutor) driver).executeScript(myscript);
+
 	}
 
 }

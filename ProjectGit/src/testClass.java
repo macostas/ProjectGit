@@ -13,12 +13,13 @@ public class testClass {
 			setUp();
 			driver.get("http://www.google.com");
 			Thread.sleep(5000);
+			
+			utilities.showErrors(driver, "Error to shown in the screen"); 
 			tearDown(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			tearDown(false);
 		}
-
 	}
 
 	public static void setUp() throws Exception {
@@ -27,6 +28,8 @@ public class testClass {
 		sr.start();
 	}
 
+	//if flag is true the test case run without errors 
+	//so the video is going to be deleted
 	public static void tearDown(boolean flag) {
 		try {
 			sr.stop();
