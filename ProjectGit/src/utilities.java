@@ -105,6 +105,39 @@ public class utilities {
 		}
 	}
 
+	public static String getVideoNameFromGrid(String gridServer) {
+		String url = "http://" + gridServer
+				+ ":4455/videoRemote?action=getVideoName";
+		try {
+
+			// creating the URL
+			URL u = new URL(url);
+
+			// openning a connection
+			URLConnection uCon = u.openConnection();
+			uCon.connect();
+			InputStream input = uCon.getInputStream();
+			StringBuilder string = new StringBuilder();
+			
+			byte[] buffer = new byte[4096];
+			int n = -1;
+			
+			while ((n = input.read(buffer)) != -1) {
+				if (n > 0) {
+					string.append(buffer);
+				}
+			}
+			
+			
+			
+			System.out.println("video name => " + string);
+			return string.toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+
 	public static void saveVideoFromGrid(String gridServer, String videoPath) {
 		String url = "http://" + gridServer
 				+ ":4455/videoRemote?action=getVideo";
