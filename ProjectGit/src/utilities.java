@@ -71,7 +71,7 @@ public class utilities {
 
 	public static void startVideoInGrid(String gridServer) {
 		String url = "http://" + gridServer
-				+ ":4455/RemoteVideoServer/videoServer?action=start";
+				+ ":4455/videoRemote?action=start";
 		try {
 
 			// creating the URL
@@ -89,7 +89,7 @@ public class utilities {
 
 	public static void stopVideoInGrid(String gridServer) {
 		String url = "http://" + gridServer
-				+ ":4455/RemoteVideoServer/videoServer?action=stop";
+				+ ":4455/videoRemote?action=stop";
 		try {
 
 			// creating the URL
@@ -107,7 +107,7 @@ public class utilities {
 
 	public static void saveVideoFromGrid(String gridServer, String videoPath) {
 		String url = "http://" + gridServer
-				+ ":4455/RemoteVideoServer/videoServer?action=stop";
+				+ ":4455/videoRemote?action=getVideo";
 		try {
 			URL u = new URL(url);
 			URLConnection uCon = u.openConnection();
